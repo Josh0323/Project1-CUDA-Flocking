@@ -186,9 +186,13 @@ void Boids::initSimulation(int N) {
   gridCellCount = gridSideCount * gridSideCount * gridSideCount;
   gridInverseCellWidth = 1.0f / gridCellWidth;
   float halfGridWidth = gridCellWidth * halfSideCount;
-  gridMinimum.x -= halfGridWidth;
-  gridMinimum.y -= halfGridWidth;
-  gridMinimum.z -= halfGridWidth;
+  // Assign rather than decrement: gridMinimum is a file-scope global, so the
+  // original `-=` only produced the right value because it started at zero.
+  // A second initSimulation call would have doubled it, quietly shifting the
+  // grid off the simulation domain.
+  gridMinimum.x = -halfGridWidth;
+  gridMinimum.y = -halfGridWidth;
+  gridMinimum.z = -halfGridWidth;
 
   // 2.1 - One entry per boid: which boid this is, and which cell it landed in.
   // These two stay parallel; sorting them together is what bins the boids.
