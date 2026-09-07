@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="450" viewBox="0 0 800 450" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif">
+<rect width="800" height="450" fill="#fcfcfb"/>
+<text x="74" y="26" font-size="15" font-weight="600" fill="#0b0b0b">Framerate vs. boid count, with and without visualization</text>
+<text x="74" y="44" font-size="11.5" fill="#52514e">In-app FPS meter, Release build, Tesla T4. Solid = visualization off; dashed = visualization on. Both axes logarithmic.</text>
+<line x1="74" y1="308.0" x2="650" y2="308.0" stroke="#e8e7e3" stroke-width="1"/>
+<text x="65" y="312.0" font-size="11" fill="#7a7975" text-anchor="end">10</text>
+<line x1="74" y1="212.2" x2="650" y2="212.2" stroke="#e8e7e3" stroke-width="1"/>
+<text x="65" y="216.2" font-size="11" fill="#7a7975" text-anchor="end">100</text>
+<line x1="74" y1="116.5" x2="650" y2="116.5" stroke="#e8e7e3" stroke-width="1"/>
+<text x="65" y="120.5" font-size="11" fill="#7a7975" text-anchor="end">1,000</text>
+<line x1="74" y1="233.5" x2="650" y2="233.5" stroke="#7a7975" stroke-width="1" stroke-dasharray="4 4"/>
+<text x="646" y="227.5" font-size="10.5" fill="#7a7975" text-anchor="end">60 FPS</text>
+<line x1="74" y1="396" x2="650" y2="396" stroke="#c9c8c3" stroke-width="1"/>
+<line x1="105.1" y1="396" x2="105.1" y2="400" stroke="#c9c8c3" stroke-width="1"/>
+<text x="105.1" y="414" font-size="10.5" fill="#7a7975" text-anchor="middle">5K</text>
+<line x1="201.6" y1="396" x2="201.6" y2="400" stroke="#c9c8c3" stroke-width="1"/>
+<text x="201.6" y="414" font-size="10.5" fill="#7a7975" text-anchor="middle">10K</text>
+<line x1="329.3" y1="396" x2="329.3" y2="400" stroke="#c9c8c3" stroke-width="1"/>
+<text x="329.3" y="414" font-size="10.5" fill="#7a7975" text-anchor="middle">25K</text>
+<line x1="425.8" y1="396" x2="425.8" y2="400" stroke="#c9c8c3" stroke-width="1"/>
+<text x="425.8" y="414" font-size="10.5" fill="#7a7975" text-anchor="middle">50K</text>
+<line x1="522.4" y1="396" x2="522.4" y2="400" stroke="#c9c8c3" stroke-width="1"/>
+<text x="522.4" y="414" font-size="10.5" fill="#7a7975" text-anchor="middle">100K</text>
+<line x1="618.9" y1="396" x2="618.9" y2="400" stroke="#c9c8c3" stroke-width="1"/>
+<text x="618.9" y="414" font-size="10.5" fill="#7a7975" text-anchor="middle">200K</text>
+<path d="M105.1,122.9 L201.6,152.3 L329.3,207.4 L425.8,264.4 L522.4,318.2 L618.9,374.5" fill="none" stroke="#2a78d6" stroke-width="2" stroke-linejoin="round"/>
+<circle cx="105.1" cy="122.9" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="201.6" cy="152.3" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="329.3" cy="207.4" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="425.8" cy="264.4" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="522.4" cy="318.2" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="618.9" cy="374.5" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="629.9" cy="374.5" r="4" fill="#2a78d6"/>
+<text x="639.9" y="378.5" font-size="10.5" fill="#0b0b0b">naive</text>
+<path d="M105.1,133.1 L201.6,158.1 L329.3,208.7 L425.8,265.1 L522.4,318.2 L618.9,374.8" fill="none" stroke="#2a78d6" stroke-width="2" stroke-linejoin="round" stroke-dasharray="5 4"/>
+<circle cx="105.1" cy="133.1" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="201.6" cy="158.1" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="329.3" cy="208.7" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="425.8" cy="265.1" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="522.4" cy="318.2" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="618.9" cy="374.8" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="629.9" cy="374.8" r="4" fill="#2a78d6"/>
+<text x="639.9" y="378.8" font-size="10.5" fill="#0b0b0b">naive (vis)</text>
+<path d="M105.1,87.3 L201.6,88.4 L329.3,105.9 L425.8,131.4 L522.4,159.6 L618.9,204.3" fill="none" stroke="#eb6834" stroke-width="2" stroke-linejoin="round"/>
+<circle cx="105.1" cy="87.3" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="201.6" cy="88.4" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="329.3" cy="105.9" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="425.8" cy="131.4" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="522.4" cy="159.6" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="618.9" cy="204.3" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="629.9" cy="204.3" r="4" fill="#eb6834"/>
+<text x="639.9" y="208.3" font-size="10.5" fill="#0b0b0b">scattered</text>
+<path d="M105.1,108.2 L201.6,110.0 L329.3,120.8 L425.8,140.7 L522.4,163.6 L618.9,204.9" fill="none" stroke="#eb6834" stroke-width="2" stroke-linejoin="round" stroke-dasharray="5 4"/>
+<circle cx="105.1" cy="108.2" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="201.6" cy="110.0" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="329.3" cy="120.8" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="425.8" cy="140.7" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="522.4" cy="163.6" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="618.9" cy="204.9" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="629.9" cy="204.9" r="4" fill="#eb6834"/>
+<text x="639.9" y="208.9" font-size="10.5" fill="#0b0b0b">scattered (vis)</text>
+<path d="M105.1,81.5 L201.6,82.0 L329.3,87.6 L425.8,100.8 L522.4,117.1 L618.9,143.8" fill="none" stroke="#1baf7a" stroke-width="2" stroke-linejoin="round"/>
+<circle cx="105.1" cy="81.5" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="201.6" cy="82.0" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="329.3" cy="87.6" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="425.8" cy="100.8" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="522.4" cy="117.1" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="618.9" cy="143.8" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="629.9" cy="143.8" r="4" fill="#1baf7a"/>
+<text x="639.9" y="147.8" font-size="10.5" fill="#0b0b0b">coherent</text>
+<path d="M105.1,104.7 L201.6,105.8 L329.3,108.9 L425.8,117.6 L522.4,130.5 L618.9,153.5" fill="none" stroke="#1baf7a" stroke-width="2" stroke-linejoin="round" stroke-dasharray="5 4"/>
+<circle cx="105.1" cy="104.7" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="201.6" cy="105.8" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="329.3" cy="108.9" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="425.8" cy="117.6" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="522.4" cy="130.5" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="618.9" cy="153.5" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="629.9" cy="153.5" r="4" fill="#1baf7a"/>
+<text x="639.9" y="157.5" font-size="10.5" fill="#0b0b0b">coherent (vis)</text>
+<text x="362" y="442" font-size="11.5" fill="#52514e" text-anchor="middle">Number of boids</text>
+<text transform="translate(16,229) rotate(-90)" font-size="11.5" fill="#52514e" text-anchor="middle">Frames per second (in-app meter)</text>
+</svg>

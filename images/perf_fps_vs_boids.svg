@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="780" height="430" viewBox="0 0 780 430" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif">
+<rect width="780" height="430" fill="#fcfcfb"/>
+<text x="72" y="26" font-size="15" font-weight="600" fill="#0b0b0b">Simulation throughput vs. boid count</text>
+<text x="72" y="44" font-size="11.5" fill="#52514e">Kernel time only (no rendering), Tesla T4, block size 128, 8-cell grid. Both axes logarithmic.</text>
+<line x1="72" y1="330.8" x2="648" y2="330.8" stroke="#e8e7e3" stroke-width="1"/>
+<text x="63" y="334.8" font-size="11" fill="#7a7975" text-anchor="end">1</text>
+<line x1="72" y1="263.3" x2="648" y2="263.3" stroke="#e8e7e3" stroke-width="1"/>
+<text x="63" y="267.3" font-size="11" fill="#7a7975" text-anchor="end">10</text>
+<line x1="72" y1="195.8" x2="648" y2="195.8" stroke="#e8e7e3" stroke-width="1"/>
+<text x="63" y="199.8" font-size="11" fill="#7a7975" text-anchor="end">100</text>
+<line x1="72" y1="128.3" x2="648" y2="128.3" stroke="#e8e7e3" stroke-width="1"/>
+<text x="63" y="132.3" font-size="11" fill="#7a7975" text-anchor="end">1,000</text>
+<line x1="72" y1="60.8" x2="648" y2="60.8" stroke="#e8e7e3" stroke-width="1"/>
+<text x="63" y="64.8" font-size="11" fill="#7a7975" text-anchor="end">10,000</text>
+<line x1="72" y1="210.8" x2="648" y2="210.8" stroke="#7a7975" stroke-width="1" stroke-dasharray="4 4"/>
+<text x="644.0" y="204.8" font-size="10.5" fill="#7a7975" text-anchor="end">60 FPS</text>
+<line x1="72" y1="378" x2="648" y2="378" stroke="#c9c8c3" stroke-width="1"/>
+<line x1="153.5" y1="378" x2="153.5" y2="382" stroke="#c9c8c3" stroke-width="1"/>
+<text x="153.5" y="396" font-size="11" fill="#7a7975" text-anchor="middle">10K</text>
+<line x1="358.3" y1="378" x2="358.3" y2="382" stroke="#c9c8c3" stroke-width="1"/>
+<text x="358.3" y="396" font-size="11" fill="#7a7975" text-anchor="middle">100K</text>
+<line x1="563.0" y1="378" x2="563.0" y2="382" stroke="#c9c8c3" stroke-width="1"/>
+<text x="563.0" y="396" font-size="11" fill="#7a7975" text-anchor="middle">1M</text>
+<path d="M91.8,140.3 L153.5,147.3 L235.0,187.7 L296.6,228.3 L358.3,266.2 L419.9,306.1" fill="none" stroke="#2a78d6" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<circle cx="91.8" cy="140.3" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="153.5" cy="147.3" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="235.0" cy="187.7" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="296.6" cy="228.3" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="358.3" cy="266.2" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="419.9" cy="306.1" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="429.9" cy="306.1" r="4" fill="#2a78d6"/>
+<text x="439.9" y="310.1" font-size="11.5" fill="#0b0b0b">naive</text>
+<path d="M91.8,71.2 L153.5,74.8 L235.0,84.0 L296.6,109.3 L358.3,138.9 L419.9,176.9 L501.4,263.5 L563.0,318.0 L624.7,365.6" fill="none" stroke="#eb6834" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<circle cx="91.8" cy="71.2" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="153.5" cy="74.8" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="235.0" cy="84.0" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="296.6" cy="109.3" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="358.3" cy="138.9" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="419.9" cy="176.9" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="501.4" cy="263.5" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="563.0" cy="318.0" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="624.7" cy="365.6" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="634.7" cy="365.6" r="4" fill="#eb6834"/>
+<text x="644.7" y="369.6" font-size="11.5" fill="#0b0b0b">scattered</text>
+<path d="M91.8,73.4 L153.5,71.7 L235.0,76.7 L296.6,91.1 L358.3,113.1 L419.9,141.8 L501.4,183.5 L563.0,220.4 L624.7,260.0" fill="none" stroke="#1baf7a" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<circle cx="91.8" cy="73.4" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="153.5" cy="71.7" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="235.0" cy="76.7" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="296.6" cy="91.1" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="358.3" cy="113.1" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="419.9" cy="141.8" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="501.4" cy="183.5" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="563.0" cy="220.4" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="624.7" cy="260.0" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="634.7" cy="260.0" r="4" fill="#1baf7a"/>
+<text x="644.7" y="264.0" font-size="11.5" fill="#0b0b0b">coherent</text>
+<text x="360" y="422" font-size="11.5" fill="#52514e" text-anchor="middle">Number of boids</text>
+<text transform="translate(16,218) rotate(-90)" font-size="11.5" fill="#52514e" text-anchor="middle">Simulation steps per second</text>
+</svg>

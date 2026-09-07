@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="780" height="430" viewBox="0 0 780 430" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif">
+<rect width="780" height="430" fill="#fcfcfb"/>
+<text x="72" y="26" font-size="15" font-weight="600" fill="#0b0b0b">Effect of CUDA block size (50,000 boids)</text>
+<text x="72" y="44" font-size="11.5" fill="#52514e">Each line is normalized to its own fastest block size, so the three implementations are comparable. Lower is better.</text>
+<line x1="72" y1="348.9" x2="648" y2="348.9" stroke="#e8e7e3" stroke-width="1"/>
+<text x="63" y="352.9" font-size="11" fill="#7a7975" text-anchor="end">1.00x</text>
+<line x1="72" y1="300.4" x2="648" y2="300.4" stroke="#e8e7e3" stroke-width="1"/>
+<text x="63" y="304.4" font-size="11" fill="#7a7975" text-anchor="end">1.05x</text>
+<line x1="72" y1="251.9" x2="648" y2="251.9" stroke="#e8e7e3" stroke-width="1"/>
+<text x="63" y="255.9" font-size="11" fill="#7a7975" text-anchor="end">1.10x</text>
+<line x1="72" y1="203.5" x2="648" y2="203.5" stroke="#e8e7e3" stroke-width="1"/>
+<text x="63" y="207.5" font-size="11" fill="#7a7975" text-anchor="end">1.15x</text>
+<line x1="72" y1="155.0" x2="648" y2="155.0" stroke="#e8e7e3" stroke-width="1"/>
+<text x="63" y="159.0" font-size="11" fill="#7a7975" text-anchor="end">1.20x</text>
+<line x1="72" y1="106.5" x2="648" y2="106.5" stroke="#e8e7e3" stroke-width="1"/>
+<text x="63" y="110.5" font-size="11" fill="#7a7975" text-anchor="end">1.25x</text>
+<line x1="72" y1="378" x2="648" y2="378" stroke="#c9c8c3" stroke-width="1"/>
+<line x1="72.0" y1="378" x2="72.0" y2="382" stroke="#c9c8c3" stroke-width="1"/>
+<text x="72.0" y="396" font-size="11" fill="#7a7975" text-anchor="middle">32</text>
+<line x1="187.2" y1="378" x2="187.2" y2="382" stroke="#c9c8c3" stroke-width="1"/>
+<text x="187.2" y="396" font-size="11" fill="#7a7975" text-anchor="middle">64</text>
+<line x1="302.4" y1="378" x2="302.4" y2="382" stroke="#c9c8c3" stroke-width="1"/>
+<text x="302.4" y="396" font-size="11" fill="#7a7975" text-anchor="middle">128</text>
+<line x1="417.6" y1="378" x2="417.6" y2="382" stroke="#c9c8c3" stroke-width="1"/>
+<text x="417.6" y="396" font-size="11" fill="#7a7975" text-anchor="middle">256</text>
+<line x1="532.8" y1="378" x2="532.8" y2="382" stroke="#c9c8c3" stroke-width="1"/>
+<text x="532.8" y="396" font-size="11" fill="#7a7975" text-anchor="middle">512</text>
+<line x1="648.0" y1="378" x2="648.0" y2="382" stroke="#c9c8c3" stroke-width="1"/>
+<text x="648.0" y="396" font-size="11" fill="#7a7975" text-anchor="middle">1024</text>
+<path d="M72.0,143.8 L187.2,276.7 L302.4,277.9 L417.6,348.9 L532.8,275.6 L648.0,101.9" fill="none" stroke="#2a78d6" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<circle cx="72.0" cy="143.8" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="187.2" cy="276.7" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="302.4" cy="277.9" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="417.6" cy="348.9" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="532.8" cy="275.6" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="648.0" cy="101.9" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="658.0" cy="101.9" r="4" fill="#2a78d6"/>
+<text x="668.0" y="105.9" font-size="11.5" fill="#0b0b0b">naive</text>
+<path d="M72.0,319.5 L187.2,345.2 L302.4,339.7 L417.6,348.9 L532.8,299.2 L648.0,146.5" fill="none" stroke="#eb6834" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<circle cx="72.0" cy="319.5" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="187.2" cy="345.2" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="302.4" cy="339.7" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="417.6" cy="348.9" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="532.8" cy="299.2" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="648.0" cy="146.5" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="658.0" cy="146.5" r="4" fill="#eb6834"/>
+<text x="668.0" y="150.5" font-size="11.5" fill="#0b0b0b">scattered</text>
+<path d="M72.0,243.9 L187.2,306.9 L302.4,320.9 L417.6,338.4 L532.8,348.9 L648.0,268.4" fill="none" stroke="#1baf7a" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<circle cx="72.0" cy="243.9" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="187.2" cy="306.9" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="302.4" cy="320.9" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="417.6" cy="338.4" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="532.8" cy="348.9" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="648.0" cy="268.4" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="658.0" cy="268.4" r="4" fill="#1baf7a"/>
+<text x="668.0" y="272.4" font-size="11.5" fill="#0b0b0b">coherent</text>
+<text x="360" y="422" font-size="11.5" fill="#52514e" text-anchor="middle">Threads per block</text>
+<text transform="translate(16,218) rotate(-90)" font-size="11.5" fill="#52514e" text-anchor="middle">Step time relative to that implementation's best</text>
+</svg>
