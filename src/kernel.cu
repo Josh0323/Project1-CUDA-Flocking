@@ -7,6 +7,7 @@
 #include <cmath>
 #include <cstdio>
 #include <iostream>
+#include <utility>
 #include <vector>
 
 #include <thrust/sort.h>
@@ -241,6 +242,75 @@ void Boids::copyBoidsToVBO(float *vbodptr_positions, float *vbodptr_velocities) 
 ******************/
 
 /**
+* Running totals for the three boids rules.
+*
+* All three neighbor-search implementations (naive, scattered grid, coherent
+* grid) funnel their candidate neighbors through this, so the physics stays
+* bit-for-bit identical between them and any performance difference is purely
+* a difference in how many candidates were examined and how they were fetched.
+*/
+struct RuleAccumulator {
+  glm::vec3 center;    // Rule 1: sum of neighbor positions
+  glm::vec3 separate;  // Rule 2: accumulated push-away vector
+  glm::vec3 velocity;  // Rule 3: sum of neighbor velocities
+  int centerCount;
+  int velocityCount;
+
+  __device__ RuleAccumulator()
+    : center(0.0f), separate(0.0f), velocity(0.0f),
+      centerCount(0), velocityCount(0) {}
+
+  /** Fold one candidate neighbor into the totals. */
+  __device__ void add(const glm::vec3 &selfPos, const glm::vec3 &otherPos,
+                      const glm::vec3 &otherVel) {
+    float dist = glm::distance(otherPos, selfPos);
+
+    if (dist < rule1Distance) {
+      center += otherPos;
+      centerCount++;
+    }
+    if (dist < rule2Distance) {
+      separate -= (otherPos - selfPos);
+    }
+    if (dist < rule3Distance) {
+      velocity += otherVel;
+      velocityCount++;
+    }
+  }
+
+  /** Turn the totals into this timestep's velocity delta. */
+  __device__ glm::vec3 delta(const glm::vec3 &selfPos) const {
+    glm::vec3 change(0.0f);
+
+    if (centerCount > 0) {
+      glm::vec3 perceivedCenter = center / (float)centerCount;
+      change += (perceivedCenter - selfPos) * rule1Scale;
+    }
+
+    change += separate * rule2Scale;
+
+    if (velocityCount > 0) {
+      // NOTE: per the project spec we do NOT subtract the boid's own velocity
+      // here, which is where this diverges from Conrad Parker's notes. The
+      // shipped rule scales are tuned for this version.
+      glm::vec3 perceivedVelocity = velocity / (float)velocityCount;
+      change += perceivedVelocity * rule3Scale;
+    }
+
+    return change;
+  }
+};
+
+/** Cap a velocity at maxSpeed without changing its direction. */
+__device__ glm::vec3 clampSpeed(glm::vec3 v) {
+  float speed = glm::length(v);
+  if (speed > maxSpeed) {
+    v *= maxSpeed / speed;
+  }
+  return v;
+}
+
+/**
 * LOOK-1.2 You can use this as a helper for kernUpdateVelocityBruteForce.
 * __device__ code can be called from a __global__ context
 * Compute the new velocity on the body with index `iSelf` due to the `N` boids
@@ -250,18 +320,44 @@ __device__ glm::vec3 computeVelocityChange(int N, int iSelf, const glm::vec3 *po
   // Rule 1: boids fly towards their local perceived center of mass, which excludes themselves
   // Rule 2: boids try to stay a distance d away from each other
   // Rule 3: boids try to match the speed of surrounding boids
-  return glm::vec3(0.0f, 0.0f, 0.0f);
+  glm::vec3 selfPos = pos[iSelf];
+  RuleAccumulator acc;
+
+  // The naive search: every boid considers every other boid, O(N) per boid.
+  for (int i = 0; i < N; i++) {
+    if (i == iSelf) {
+      continue;
+    }
+    acc.add(selfPos, pos[i], vel[i]);
+  }
+
+  return acc.delta(selfPos);
 }
 
 /**
-* TODO-1.2 implement basic flocking
+* 1.2 implement basic flocking
 * For each of the `N` bodies, update its position based on its current velocity.
 */
 __global__ void kernUpdateVelocityBruteForce(int N, glm::vec3 *pos,
   glm::vec3 *vel1, glm::vec3 *vel2) {
+  int index = threadIdx.x + (blockIdx.x * blockDim.x);
+  if (index >= N) {
+    return;
+  }
+
   // Compute a new velocity based on pos and vel1
+  glm::vec3 newVel = vel1[index] + computeVelocityChange(N, index, pos, vel1);
+
   // Clamp the speed
+  newVel = clampSpeed(newVel);
+
   // Record the new velocity into vel2. Question: why NOT vel1?
+  // Because every other thread in this launch is still reading vel1 as this
+  // timestep's input. Writing in place would let a boid see some neighbors at
+  // their old velocity and some at their new one, depending on scheduling -
+  // a data race whose outcome varies run to run. vel2 keeps the read set
+  // frozen for the whole step; the caller then ping-pongs the buffers.
+  vel2[index] = newVel;
 }
 
 /**
@@ -325,6 +421,13 @@ __global__ void kernIdentifyCellStartEnd(int N, int *particleGridIndices,
   // "this index doesn't match the one before it, must be a new cell!"
 }
 
+/**
+* 2.3 - Gather the boid data into cell-sorted order.
+* After this, boids that share a grid cell are contiguous in posSorted and
+* velSorted, so the coherent kernel can walk a cell as a straight memory run.
+*/
+
+
 __global__ void kernUpdateVelNeighborSearchScattered(
   int N, int gridResolution, glm::vec3 gridMin,
   float inverseCellWidth, float cellWidth,
@@ -364,8 +467,19 @@ __global__ void kernUpdateVelNeighborSearchCoherent(
 * Step the entire N-body simulation by `dt` seconds.
 */
 void Boids::stepSimulationNaive(float dt) {
-  // TODO-1.2 - use the kernels you wrote to step the simulation forward in time.
-  // TODO-1.2 ping-pong the velocity buffers
+  dim3 fullBlocksPerGrid((numObjects + blockSize - 1) / blockSize);
+
+  // 1.2 - use the kernels you wrote to step the simulation forward in time.
+  kernUpdateVelocityBruteForce<<<fullBlocksPerGrid, blockSize>>>(
+    numObjects, dev_pos, dev_vel1, dev_vel2);
+  checkCUDAErrorWithLine("kernUpdateVelocityBruteForce failed!");
+
+  kernUpdatePos<<<fullBlocksPerGrid, blockSize>>>(numObjects, dt, dev_pos, dev_vel2);
+  checkCUDAErrorWithLine("kernUpdatePos failed!");
+
+  // 1.2 ping-pong the velocity buffers: this step's output becomes next
+  // step's input, and the stale buffer becomes the next scratch target.
+  std::swap(dev_vel1, dev_vel2);
 }
 
 void Boids::stepSimulationScatteredGrid(float dt) {
