@@ -69,6 +69,14 @@ void checkCUDAError(const char *msg, int line = -1) {
 /*! Size of the starting area in simulation space. */
 #define scene_scale 100.0f
 
+// Part 2.2 - Width of a uniform grid cell, as a multiple of the neighborhood
+// distance. At 2.0f a cell spans two search radii, so at most 8 cells can
+// overlap a boid's neighborhood; at 1.0f a cell spans one radius and up to 27
+// come into play. The neighbor search derives its cell range from the search
+// radius rather than hard-coding a count, so flipping this constant is the
+// only change needed to run the 2.2 experiment.
+#define cellWidthMultiplier 2.0f
+
 /***********************************************
 * Kernel state (pointers are device pointers) *
 ***********************************************/
@@ -179,7 +187,7 @@ void Boids::initSimulation(int N) {
   checkCUDAErrorWithLine("kernGenerateRandomPosArray failed!");
 
   // LOOK-2.1 computing grid params
-  gridCellWidth = 2.0f * std::max(std::max(rule1Distance, rule2Distance), rule3Distance);
+  gridCellWidth = cellWidthMultiplier * std::max(std::max(rule1Distance, rule2Distance), rule3Distance);
   int halfSideCount = (int)(scene_scale / gridCellWidth) + 1;
   gridSideCount = 2 * halfSideCount;
 
