@@ -249,14 +249,29 @@ void Boids::copyBoidsToVBO(float *vbodptr_positions, float *vbodptr_velocities) 
 * in the `pos` and `vel` arrays.
 */
 __device__ glm::vec3 computeVelocityChange(int N, int iSelf, const glm::vec3 *pos, const glm::vec3 *vel) {
-  int index = threadIdx.x + (blockIdx.x * blockDim.x);
-  glm::vec3 curPos = pos[index];
+  glm::vec3 change(0.0f);
+
   // Rule 1: boids fly towards their local perceived center of mass, which excludes themselves
-  glm::vec3 sum(0.0f);
+  glm::vec3 curPos = pos[iSelf];
+  glm::vec3 centerSum(0.0f);
+  int centerCount = 0;
+
+  for (int i = 0; i < N; i++) {
+    if (i == iSelf) continue;
+    if (glm::distance(pos[i], curPos) < rule1Distance) {
+      centerSum += pos[i];
+      centerCount++;
+    }
+
+    if (centerCount > 0) {
+      centerSum /= centerCount;
+      change = (centerSum - curPos) * rule1Scale;
+    }
+  }
 
   // Rule 2: boids try to stay a distance d away from each other
   // Rule 3: boids try to match the speed of surrounding boids
-  return glm::vec3(0.0f, 0.0f, 0.0f);
+  return change;
 }
 
 /**
@@ -273,7 +288,7 @@ __global__ void kernUpdateVelocityBruteForce(int N, glm::vec3 *pos,
   glm::vec3 thisPos = pos[index];
   // Clamp the speed
   // Record the new velocity into vel2. Question: why NOT vel1?
-  vel2[index] = glm::vec3(1.0f, 0.0f, 0.0f);
+  vel2[index] = vel1[index] + computeVelocityChange(N, index, pos, vel1);
 }
 
 /**
