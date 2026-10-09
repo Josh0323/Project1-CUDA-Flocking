@@ -249,28 +249,51 @@ void Boids::copyBoidsToVBO(float *vbodptr_positions, float *vbodptr_velocities) 
 * in the `pos` and `vel` arrays.
 */
 __device__ glm::vec3 computeVelocityChange(int N, int iSelf, const glm::vec3 *pos, const glm::vec3 *vel) {
-  glm::vec3 change(0.0f);
+  glm::vec3 curPos = pos[iSelf];
 
   // Rule 1: boids fly towards their local perceived center of mass, which excludes themselves
-  glm::vec3 curPos = pos[iSelf];
-  glm::vec3 centerSum(0.0f);
+  glm::vec3 perceivedCenter(0.0f);
   int centerCount = 0;
+
+  // Rule 2: boids try to stay a distance d away from each other
+  glm::vec3 c(0.0f);
+
+  // Rule 3: boids try to match the speed of surrounding boids
+  glm::vec3 perceivedVel(0.0f);
+  int velCount = 0;
 
   for (int i = 0; i < N; i++) {
     if (i == iSelf) continue;
-    if (glm::distance(pos[i], curPos) < rule1Distance) {
-      centerSum += pos[i];
+    float distance = glm::distance(pos[i], curPos);
+    if (distance < rule1Distance) {
+      perceivedCenter += pos[i];
       centerCount++;
     }
 
-    if (centerCount > 0) {
-      centerSum /= centerCount;
-      change = (centerSum - curPos) * rule1Scale;
+    if (distance < rule2Distance) {
+      c -= (pos[i] - curPos);
     }
+
+    if (distance < rule3Distance) {
+      perceivedVel += vel[i];
+      velCount++;
+    }
+
   }
 
-  // Rule 2: boids try to stay a distance d away from each other
-  // Rule 3: boids try to match the speed of surrounding boids
+  glm::vec3 change(0.0f);
+  if (centerCount > 0) {
+    perceivedCenter /= centerCount;
+    change = (perceivedCenter - curPos) * rule1Scale;
+  }
+
+  change += (c * rule2Scale);
+
+  if (velCount > 0) {
+    perceivedVel /= velCount;
+    change += (perceivedVel * rule3Scale);
+  }
+
   return change;
 }
 
@@ -285,10 +308,14 @@ __global__ void kernUpdateVelocityBruteForce(int N, glm::vec3 *pos,
   if (index >= N) {
     return;
   }
-  glm::vec3 thisPos = pos[index];
   // Clamp the speed
   // Record the new velocity into vel2. Question: why NOT vel1?
-  vel2[index] = vel1[index] + computeVelocityChange(N, index, pos, vel1);
+  glm::vec3 newVel = vel1[index] + computeVelocityChange(N, index, pos, vel1);
+  float speed = glm::length(newVel);
+  if (speed > maxSpeed) {
+    newVel = glm::normalize(newVel) * maxSpeed;
+  }
+  vel2[index] = newVel;
 }
 
 /**
